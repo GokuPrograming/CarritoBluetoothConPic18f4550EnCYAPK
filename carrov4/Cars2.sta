@@ -1,0 +1,44 @@
+
+ROM used: 198 (1%)
+          202 (1%) including unused fragments
+
+          0 Average locations per line
+          4 Average locations per statement
+
+RAM used: 4 (0%) at main() level
+          5 (0%) worst case
+
+Stack used: 1 worst case (out of 31 total available)
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+   76    46 100  Cars2.c
+  451     0   0  ..\..\..\..\..\Program Files (x86)\PICC\devices\18F4550.h
+----- -----
+  527    46 Total
+
+Page ROM  %  RAM   Vol Diff  Functions:
+---- --- --- ---   --- ----  ----------
+0    154  39   0  1265  4.9  main
+0     40  10   0             @goto10061
+
+Program metrics:
+    Functions               1
+    Statements              46
+    Comments                158
+    Volume (V)              1268
+    Difficilty (D)          4.8
+    Effort to implement (E) 6116
+    Time to implement (T)   6 minutes
+    Est Delivered Bugs (B)  0
+    Cyclomatic Complexity   8
+    Maintainability (MI)    99
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-01FFE     0  8192  
+02000-02006     4  4  
+02008-07FFE   194  24374  
+
+
+

@@ -1,0 +1,176 @@
+CCS PCH C Compiler, Version 4.104, 5967               25-oct.-23 23:36
+
+               Filename: C:\Users\MEGADETH\Documents\sistemas p\carrov4\Cars2.lst
+
+               ROM used: 198 bytes (1%)
+                         Largest free fragment is 24374
+               RAM used: 4 (0%) at main() level
+                         5 (0%) worst case
+               Stack:    1 locations
+
+*
+2000:  GOTO   2008
+.................... #include <18F4550.h> // Para PIC18F4550 cambiar por: #include <18F4550.h> 
+.................... //////// Standard Header file for the PIC18F4550 device //////////////// 
+.................... #device PIC18F4550 
+.................... #list 
+....................  
+.................... #use delay( clock=20Mhz, crystal ) // Tipo de oscilador y frecuencia dependiendo del microcontrolador 
+.................... #build( reset=0x02000, interrupt=0x02008 ) // Asigna los vectores de reset e interrupción para la versión con bootloader 
+.................... #org 0x0000,0x1FFF {} // Reserva espacio en memoria para el bootloader 
+....................  
+.................... //------------------------------------------------------------------------------- 
+.................... #USE RS232( stream=SERIE, BAUD=9600, PARITY=N, XMIT=PIN_C6, RCV=PIN_C7, BITS=8) 
+....................  
+.................... #define LED pin_A4 
+.................... #define Boton pin_A2 
+.................... #use fast_io(b) 
+.................... #use fast_io(d) 
+....................  
+.................... void main(void) { 
+*
+2008:  CLRF   FF8
+200A:  BCF    FD0.7
+200C:  CLRF   FEA
+200E:  CLRF   FE9
+2010:  BSF    FB8.3
+2012:  MOVLW  08
+2014:  MOVWF  FAF
+2016:  MOVLW  02
+2018:  MOVWF  FB0
+201A:  MOVLW  A6
+201C:  MOVWF  FAC
+201E:  MOVLW  90
+2020:  MOVWF  FAB
+2022:  MOVF   FC1,W
+2024:  ANDLW  C0
+2026:  IORLW  0F
+2028:  MOVWF  FC1
+202A:  MOVLW  07
+202C:  MOVWF  FB4
+....................    set_tris_b(0x00); // Configura el puerto B como salida 
+202E:  MOVLW  00
+2030:  MOVWF  F93
+....................    set_tris_d(0xFF); // Configura el puerto D como entrada 
+2032:  MOVLW  FF
+2034:  MOVWF  F95
+....................     
+....................    output_low(pin_b0); // Apaga el LED RB0 
+2036:  BCF    F8A.0
+....................    output_low(pin_b1); // Apaga el LED RB1 
+2038:  BCF    F8A.1
+....................    output_low(pin_b2); // Apaga el LED RB2 
+203A:  BCF    F8A.2
+....................    output_low(pin_b3); // Apaga el LED RB3 
+203C:  BCF    F8A.3
+....................     
+....................    while (true) { // Bucle infinito 
+....................       if (kbhit()) { // Pregunta si hay algun dato recibido 
+203E:  BTFSS  F9E.5
+2040:  BRA    209E
+....................          char Caracter = getc(); // Guarda el caracter 
+2042:  BTFSS  F9E.5
+2044:  BRA    2042
+2046:  MOVFF  FAE,05
+....................          switch (Caracter) { // Compara el caracter con los casos posibles 
+204A:  MOVLW  30
+204C:  SUBWF  05,W
+204E:  ADDLW  F9
+2050:  BC    209E
+2052:  ADDLW  07
+2054:  GOTO   20A2
+....................             case '0': // Si el caracter es 1//derecha 
+....................                output_low(pin_b0); // Enciende el LED RB0 
+2058:  BCF    F8A.0
+....................                output_low(pin_b1); // Enciende el LED RB1 
+205A:  BCF    F8A.1
+....................                output_low(pin_b2); // Enciende el LED RB2 
+205C:  BCF    F8A.2
+....................                output_low(pin_b3); // Enciende el LED RB3 
+205E:  BCF    F8A.3
+....................                break; // Sale del switch 
+2060:  BRA    209E
+....................                 
+....................             case '1': // izquierda 
+....................               output_high(pin_b0); // Enciende el LED RB0 
+2062:  BSF    F8A.0
+....................                output_low(pin_b1); // Enciende el LED RB1 
+2064:  BCF    F8A.1
+....................                output_low(pin_b2); // Enciende el LED RB2 
+2066:  BCF    F8A.2
+....................                output_high(pin_b3); // Enciende el LED RB3 
+2068:  BSF    F8A.3
+....................                break; // Sale del switch  
+206A:  BRA    209E
+....................                               case '2': // izquierda 
+....................               output_low(pin_b0); // Enciende el LED RB0 
+206C:  BCF    F8A.0
+....................                output_high(pin_b1); // Enciende el LED RB1 
+206E:  BSF    F8A.1
+....................                output_high(pin_b2); // Enciende el LED RB2 
+2070:  BSF    F8A.2
+....................                output_low(pin_b3); // Enciende el LED RB3 
+2072:  BCF    F8A.3
+....................                break; // Sale del switch  
+2074:  BRA    209E
+....................                               case '3': // izquierda 
+....................               output_high(pin_b0); // Enciende el LED RB0 
+2076:  BSF    F8A.0
+....................                output_low(pin_b1); // Enciende el LED RB1 
+2078:  BCF    F8A.1
+....................                output_low(pin_b2); // Enciende el LED RB2 
+207A:  BCF    F8A.2
+....................                output_low(pin_b3); // Enciende el LED RB3 
+207C:  BCF    F8A.3
+....................                break; // Sale del switch  
+207E:  BRA    209E
+....................                               case '4': // izquierda 
+....................                output_low(pin_b0); // Enciende el LED RB0 
+2080:  BCF    F8A.0
+....................                output_high(pin_b1); // Enciende el LED RB1 
+2082:  BSF    F8A.1
+....................                output_low(pin_b2); // Enciende el LED RB2 
+2084:  BCF    F8A.2
+....................                output_low(pin_b3); // Enciende el LED RB3 
+2086:  BCF    F8A.3
+....................                break; // Sale del switch  
+2088:  BRA    209E
+....................                               case '5': // izquierda 
+....................              output_low(pin_b0); // Enciende el LED RB0 
+208A:  BCF    F8A.0
+....................                output_low(pin_b1); // Enciende el LED RB1 
+208C:  BCF    F8A.1
+....................                output_low(pin_b2); // Enciende el LED RB2 
+208E:  BCF    F8A.2
+....................                output_high(pin_b3); // Enciende el LED RB3 
+2090:  BSF    F8A.3
+....................                break; // Sale del switch  
+2092:  BRA    209E
+....................                               case '6': // izquierda 
+....................                output_low(pin_b0); // Enciende el LED RB0 
+2094:  BCF    F8A.0
+....................                output_low(pin_b1); // Enciende el LED RB1 
+2096:  BCF    F8A.1
+....................                output_high(pin_b2); // Enciende el LED RB2 
+2098:  BSF    F8A.2
+....................                output_low(pin_b3); // Enciende el LED RB3 
+209A:  BCF    F8A.3
+....................                break; // Sale del switch 
+209C:  BRA    209E
+....................             
+....................          } 
+....................       } 
+....................    } 
+209E:  BRA    203E
+.................... } 
+....................  
+20A0:  SLEEP 
+
+Configuration Fuses:
+   Word  1: CC24   IESO FCMEN HS PLL5 CPUDIV1 USBDIV
+   Word  2: 1E3E   BROWNOUT NOWDT BORV20 PUT WDT32768 VREGEN
+   Word  3: 8700   PBADEN CCP2C1 MCLR LPT1OSC
+   Word  4: 0081   STVREN NODEBUG NOLVP NOXINST NOICPRT
+   Word  5: C00F   NOPROTECT NOCPD NOCPB
+   Word  6: E00F   NOWRT NOWRTD NOWRTC NOWRTB
+   Word  7: 400F   NOEBTR NOEBTRB
